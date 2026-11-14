@@ -1,5 +1,6 @@
 
 ---
+import { siteUrl } from '../lib/urls';
 import Base from '../layouts/Base.astro';
 import { render } from 'astro:content';
 import { publications } from '../lib/data';
@@ -25,7 +26,7 @@ const papers = (await publications()).filter((p) =>
     <div class="prose">
       <Content />
       {project.data.links?.map((link) => (
-        <p><a href={link.url}>{link.label} ↗</a></p>
+        <p><a href={siteUrl(link.url)}>{link.label} ↗</a></p>
       ))}
     </div>
 
@@ -34,7 +35,7 @@ const papers = (await publications()).filter((p) =>
       {papers.map((p) => (
         <article class="pub">
           <h3>
-            <a href={`/publications/${p.id}/`}>
+            <a href={siteUrl(`/publications/${p.id}/`)}>
               {p.data.title}
             </a>
           </h3>

@@ -1,0 +1,46 @@
+
+---
+import Base from '../layouts/Base.astro';
+import { render } from 'astro:content';
+import { publications } from '../lib/data';
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const papers = (await publications()).filter((p) =>
+  (p.data.projects ?? []).includes(project.id)
+);
+---
+
+<Base title={project.data.title}>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">Project</div>
+      <h1>{project.data.title}</h1>
+      <p>{project.data.summary}</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="prose">
+      <Content />
+      {project.data.links?.map((link) => (
+        <p><a href={link.url}>{link.label} ↗</a></p>
+      ))}
+    </div>
+
+    <section class="section">
+      <h2>Publications</h2>
+      {papers.map((p) => (
+        <article class="pub">
+          <h3>
+            <a href={`/publications/${p.id}/`}>
+              {p.data.title}
+            </a>
+          </h3>
+          <p>{p.data.authors.join(', ')} · {p.data.year}</p>
+        </article>
+      ))}
+    </section>
+  </div>
+</Base>

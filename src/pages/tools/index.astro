@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import {tools} from '../../lib/data';
+const entries=await tools();
+---
+<Base title="Tools" description="Explore tools, prototypes, and open-source software developed by UNC VisuaLab.">
+  <section class="page-hero"><div class="wrap"><div class="eyebrow">Explore and use our work</div><h1>Tools</h1><p>Interactive systems, research prototypes, and open-source resources developed by VisuaLab. Explore a tool, try a demo, or find its source code and documentation.</p></div></section>
+  <section class="section"><div class="wrap">
+    {entries.length ? <div class="card-grid">{entries.map(tool=><article class="card">
+      <div class="card-visual">{tool.data.image ? <img src={tool.data.image} alt={`Preview of ${tool.data.title}`} loading="lazy"/> : <span aria-hidden="true">↗</span>}</div>
+      <div class="card-body">
+        {tool.data.category && <div class="pill">{tool.data.category}</div>}
+        <h3>{tool.data.title}</h3><p>{tool.data.summary}</p>
+        {tool.data.links.length>0 && <div class="pub-links">{tool.data.links.map(link=><a href={link.url} target={/^https?:\/\//.test(link.url)?'_blank':undefined} rel={/^https?:\/\//.test(link.url)?'noopener noreferrer':undefined}>{link.label} ↗</a>)}</div>}
+      </div>
+    </article>)}</div> : <div class="tools-empty"><h2>Tools are coming soon</h2><p>We're preparing a collection of VisuaLab software and research prototypes. Check back for demos, source code, and documentation.</p></div>}
+  </div></section>
+</Base>
+<style>.tools-empty{padding:48px;border:1px solid var(--line);border-radius:10px;background:var(--paper);max-width:740px}.tools-empty h2{font-size:26px}.tools-empty p{color:var(--muted)}.card-body .pill{margin-bottom:10px}.pub-links a:focus-visible{outline:2px solid var(--blue);outline-offset:4px}</style>

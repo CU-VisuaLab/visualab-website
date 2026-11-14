@@ -1,0 +1,4 @@
+---
+import Base from '../../layouts/Base.astro';import {themes} from '../../lib/data';const items=await themes();
+---
+<Base title="Research"><section class="page-hero"><div class="wrap"><div class="eyebrow">Our work</div><h1>Research</h1><p>We investigate how people make sense of data, and build systems that support more effective and inclusive interactions with information.</p></div></section><section class="section"><div class="wrap card-grid">{items.map(t=><a class="card" href={`/research/${t.id}/`}><div class="card-visual">{t.data.image?<img src={t.data.image} alt=""/>:'↗'}</div><div class="card-body"><h3>{t.data.title}</h3><p>{t.data.summary}</p></div></a>)}</div></section></Base>

@@ -1,0 +1,121 @@
+# GitHub repository configured; a GitHub OAuth bridge is still required before login works.
+backend:
+  name: github
+  repo: CU-VisuaLab/visualab-website
+  branch: main
+  # base_url: https://YOUR-OAUTH-BRIDGE.example
+  # auth_endpoint: auth
+media_folder: public/images
+public_folder: /images
+slug:
+  encoding: ascii
+  clean_accents: true
+collections:
+  - name: publications
+    label: Publications
+    folder: src/content/publications
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{year}} · {{title}}'
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Year, name: year, widget: number, value_type: int}
+      - {label: Authors, name: authors, widget: list, field: {label: Author, name: author, widget: string}}
+      - {label: Venue, name: venue, widget: string}
+      - {label: Venue abbreviation, name: venueShort, widget: string, required: false}
+      - {label: Type, name: type, widget: select, options: [conference, journal, workshop, preprint, thesis, other], default: conference}
+      - {label: Status, name: status, widget: select, options: [published, accepted, preprint], default: published}
+      - {label: DOI, name: doi, widget: string, required: false}
+      - {label: Abstract, name: abstract, widget: text, required: false}
+      - {label: Thumbnail, name: thumbnail, widget: image, required: false}
+      - {label: Research theme IDs, name: themes, widget: list, required: false, default: []}
+      - {label: Project IDs, name: projects, widget: list, required: false, default: []}
+      - {label: People IDs, name: people, widget: list, required: false, default: []}
+      - {label: Featured on homepage, name: featured, widget: boolean, default: false}
+      - label: Links
+        name: links
+        widget: list
+        required: false
+        fields:
+          - {label: Label, name: label, widget: string}
+          - {label: URL, name: url, widget: string}
+      - {label: BibTeX, name: bibtex, widget: text, required: false}
+      - {label: Additional content, name: body, widget: markdown, required: false}
+  - name: themes
+    label: Research themes
+    folder: src/content/themes
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Summary, name: summary, widget: text}
+      - {label: Image, name: image, widget: image, required: false}
+      - {label: Display order, name: order, widget: number, value_type: int, default: 99}
+      - {label: Featured on homepage, name: featured, widget: boolean, default: true}
+      - {label: Description, name: body, widget: markdown}
+  - name: projects
+    label: Projects
+    folder: src/content/projects
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - {label: Title, name: title, widget: string}
+      - {label: Summary, name: summary, widget: text}
+      - {label: Image, name: image, widget: image, required: false}
+      - {label: Research theme IDs, name: themes, widget: list, required: false, default: []}
+      - {label: People IDs, name: people, widget: list, required: false, default: []}
+      - {label: Featured on homepage, name: featured, widget: boolean, default: false}
+      - label: Links
+        name: links
+        widget: list
+        required: false
+        fields:
+          - {label: Label, name: label, widget: string}
+          - {label: URL, name: url, widget: string}
+      - {label: Description, name: body, widget: markdown}
+  - name: tools
+    label: Tools
+    folder: src/content/tools
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    fields:
+      - {label: Tool name, name: title, widget: string}
+      - {label: Short description, name: summary, widget: text}
+      - {label: Preview image, name: image, widget: image, required: false}
+      - {label: Category, name: category, widget: string, required: false, hint: 'e.g. Visualization design or Accessibility'}
+      - {label: Research theme IDs, name: themes, widget: list, required: false, default: []}
+      - {label: Related project IDs, name: projects, widget: list, required: false, default: []}
+      - {label: Featured, name: featured, widget: boolean, default: false}
+      - {label: Display order, name: order, widget: number, value_type: int, default: 99}
+      - label: Links
+        name: links
+        widget: list
+        required: false
+        fields:
+          - {label: Link label, name: label, widget: string, hint: 'Demo, GitHub, Documentation, etc.'}
+          - {label: URL, name: url, widget: string}
+      - {label: Details, name: body, widget: markdown, required: false}
+  - name: people
+    label: People
+    folder: src/content/people
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    fields:
+      - {label: Name, name: name, widget: string}
+      - {label: Role, name: role, widget: string}
+      - {label: Status, name: status, widget: select, options: [current, alumni, collaborator]}
+      - {label: Photo, name: image, widget: image, required: false}
+      - {label: Website, name: website, widget: string, required: false}
+      - {label: Display order, name: order, widget: number, value_type: int, default: 99}
+      - {label: Bio, name: body, widget: markdown, required: false}

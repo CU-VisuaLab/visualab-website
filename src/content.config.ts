@@ -1,0 +1,10 @@
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+const stringList = z.array(z.string()).default([]);
+const linkSchema = z.object({ label: z.string(), url: z.string() });
+const publications = defineCollection({loader: glob({pattern:'**/*.md',base:'./src/content/publications'}),schema:z.object({title:z.string(),year:z.number().int().min(1900),authors:stringList,venue:z.string(),venueShort:z.string().optional(),type:z.enum(['conference','journal','workshop','preprint','thesis','other']).default('conference'),doi:z.string().optional(),abstract:z.string().optional(),thumbnail:z.string().optional(),themes:stringList,projects:stringList,people:stringList,featured:z.boolean().default(false),links:z.array(linkSchema).default([]),bibtex:z.string().optional(),date:z.coerce.date().optional(),status:z.enum(['published','accepted','preprint']).default('published')})});
+const themes = defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/themes'}),schema:z.object({title:z.string(),summary:z.string(),image:z.string().optional(),order:z.number().default(99),featured:z.boolean().default(true)})});
+const projects = defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/projects'}),schema:z.object({title:z.string(),summary:z.string(),image:z.string().optional(),themes:stringList,people:stringList,featured:z.boolean().default(false),links:z.array(linkSchema).default([])})});
+const people = defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/people'}),schema:z.object({name:z.string(),role:z.string(),status:z.enum(['current','alumni','collaborator']),image:z.string().optional(),website:z.string().optional(),order:z.number().default(99)})});
+const tools = defineCollection({loader:glob({pattern:'**/*.md',base:'./src/content/tools'}),schema:z.object({title:z.string(),summary:z.string(),image:z.string().optional(),category:z.string().optional(),themes:stringList,projects:stringList,featured:z.boolean().default(false),order:z.number().default(99),links:z.array(linkSchema).default([])})});
+export const collections = {publications,themes,projects,people,tools};

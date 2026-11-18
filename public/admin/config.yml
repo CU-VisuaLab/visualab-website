@@ -1,10 +1,10 @@
 # GitHub repository configured; a GitHub OAuth bridge is still required before login works.
+
 backend:
   name: github
   repo: CU-VisuaLab/visualab-website
   branch: main
-  # base_url: https://YOUR-OAUTH-BRIDGE.example
-  # auth_endpoint: auth
+  base_url: https://sveltia-cms-auth.danielle-szafir.workers.dev
 media_folder: public/images
 public_folder: /images
 slug:
